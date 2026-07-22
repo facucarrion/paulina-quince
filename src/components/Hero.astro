@@ -1,21 +1,19 @@
 ---
-import ArrowDown from './icons/ArrowDown.astro'
 ---
 
 <section class='relative flex h-screen flex-col items-center justify-center'>
-  <ArrowDown
-    class='absolute bottom-12 size-16 stroke-primary lg:bottom-20'
-    id='arrow-icon'
-  />
+  <img src='/logo.webp' alt='Logo' class='absolute top-1/3 w-80 -translate-y-1/2' />
+  <div class='absolute top-[65%] flex flex-col items-center gap-4'>
+    <div
+      class='flex items-start gap-3 text-3xl font-semibold tracking-wide text-white max-sm:gap-2 max-sm:text-2xl'
+      id='countdown'
+    ></div>
+  </div>
 </section>
 
 <style>
-  #arrow-icon {
-    animation: bounce 2s infinite;
-  }
-
   section {
-    background-image: url('/portada.jpeg');
+    background-image: url('/portada.webp');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -26,16 +24,52 @@ import ArrowDown from './icons/ArrowDown.astro'
       background-position: 52% center;
     }
   }
+</style>
 
-  @keyframes bounce {
-    0% {
-      transform: translateY(0);
+<script>
+  const countdown = document.getElementById('countdown') as HTMLDivElement
+  const goalDate = new Date('2026-09-26T21:30:00').getTime()
+
+  function updateCountdown() {
+    const actualDate = new Date().getTime()
+    const difference = goalDate - actualDate
+
+    const data = {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor(
+        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      ),
+      minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+      seconds: Math.floor((difference % (1000 * 60)) / 1000)
     }
-    50% {
-      transform: translateY(-10px);
-    }
-    100% {
-      transform: translateY(0);
+
+    if (difference >= 0) {
+      const units = [
+        { value: data.days, label: 'D\u00cdAS' },
+        { value: data.hours, label: 'HORAS' },
+        { value: data.minutes, label: 'MINUTOS' },
+        { value: data.seconds, label: 'SEGUNDOS' }
+      ]
+
+      countdown.innerHTML = units
+        .map(
+          (unit, i) =>
+            `<div class='flex flex-col items-center gap-6'>
+              <span class='text-5xl max-sm:text-4xl'>${String(unit.value).padStart(2, '0')}</span>
+              <span class='text-sm font-thin max-sm:text-xs'>${unit.label}</span>
+            </div>${
+              i < units.length - 1
+                ? `<span class='mt-2 text-3xl'>:</span>`
+                : ''
+            }`
+        )
+        .join('')
+
+      requestAnimationFrame(updateCountdown)
+    } else {
+      countdown.innerHTML = '\u00a1Es el d\u00eda!'
     }
   }
-</style>
+
+  updateCountdown()
+</script>

@@ -6,8 +6,8 @@ import Music from '../components/Music.astro'
 <html lang='es'>
   <head>
     <meta charset='UTF-8' />
-    <title>Iara - Quince Años</title>
-    <meta property='og:title' content='Iara - Quince Años' />
+    <title>Paulina - Quince Años</title>
+    <meta property='og:title' content='Paulina - Quince Años' />
     <meta property='og:image' content='/og.jpeg' />
     <meta
       name='viewport'
@@ -19,10 +19,16 @@ import Music from '../components/Music.astro'
       type='image/icon'
     />
   </head>
-  <body class='select-none *:px-4'>
+  <body class='select-none bg-tertiary'>
     <div id='parallax'></div>
-    <Music src='/music/music.mp3' />
-    <slot />
+    <div class='relative mx-auto min-h-screen max-w-[550px] bg-tertiary'>
+      <div class='relative sticky top-0 z-10 h-0'>
+        <div class='absolute right-4 top-4'>
+          <Music src='/music/music.mp3' />
+        </div>
+      </div>
+      <slot />
+    </div>
   </body>
 </html>
 
