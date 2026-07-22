@@ -1,0 +1,41 @@
+---
+import ArrowDown from './icons/ArrowDown.astro'
+---
+
+<section class='relative flex h-screen flex-col items-center justify-center'>
+  <ArrowDown
+    class='absolute bottom-12 size-16 stroke-primary lg:bottom-20'
+    id='arrow-icon'
+  />
+</section>
+
+<style>
+  #arrow-icon {
+    animation: bounce 2s infinite;
+  }
+
+  section {
+    background-image: url('/portada.jpeg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  @media (max-width: 640px) {
+    section {
+      background-position: 52% center;
+    }
+  }
+
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+</style>
